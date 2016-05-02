@@ -2,6 +2,7 @@
 #include "ReportEntity.h"
 #include <map>
 #include <iostream>
+#include <fstream>
 
 int ReportEntity::gSortTag = 0;
 bool ReportEntity::gSortAsc = false;
@@ -62,6 +63,52 @@ void ReportEntity::print(void)
 
 	}
 }
+
+void ReportEntity::save(std::string filepath)
+{
+	using std::locale;
+	//locale &loc=locale::global(locale(locale(),"",LC_CTYPE));
+	locale &loc=locale::global(locale("chs", locale::ctype));
+
+	std::ofstream fs(filepath, std::ios::out|std::ios::binary);
+
+	
+	for(ReportHeader::iterator iter = this->m_header.begin();
+		iter != this->m_header.end(); ++iter)
+	{
+		const char * header_colname = iter->second.c_str();
+		fs << header_colname;
+
+		ReportHeader::iterator iter_check = iter;
+		if(++iter_check == this->m_header.end()){
+			fs << std::endl;
+		}else{
+			fs << ",";
+		}
+	}	
+
+	for(Content::iterator iter = this->m_content.begin();
+		iter != this->m_content.end(); ++iter)
+	{
+		ReportRow& row = *iter;
+
+		for(ReportRow::iterator iter_r = row.begin();
+			iter_r != row.end(); ++ iter_r)
+		{
+	
+			fs << iter_r->get()->toString();
+			if(iter_r+1 == row.end()){
+				fs << std::endl;
+			}else{
+				fs << ",";
+			}
+		}
+
+	}
+
+	locale::global(loc);
+	fs.close();
+};
 
 int ReportEntity::getFieldCount(void)
 {

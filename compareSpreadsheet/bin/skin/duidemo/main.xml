@@ -40,7 +40,7 @@
 				</HorizontalLayout>
 				<HorizontalLayout pos="0,0,0,80">
 					<Button name="fresh" pos="10,0,106,31" float="true" text="比对" disabledtextcolor="#FF787878" normalimage="file='page_normal.png' corner='5,5,5,5'" hotimage="file='page_choose.png' corner='5,5,5,5'" pushedimage="file='page_click.png' corner='5,5,5,5'" disabledimage="file='page_grey.png' corner='5,5,5,5'" style="edit_style"/>
-					<Button name="fresh" pos="120,0,216,32" float="true" text="保存" disabledtextcolor="#FF787878" normalimage="file='page_normal.png' corner='5,5,5,5'" hotimage="file='page_choose.png' corner='5,5,5,5'" pushedimage="file='page_click.png' corner='5,5,5,5'" disabledimage="file='page_grey.png' corner='5,5,5,5'" style="edit_style"/>
+					<Button name="save" pos="120,0,216,32" float="true" text="保存" disabledtextcolor="#FF787878" normalimage="file='page_normal.png' corner='5,5,5,5'" hotimage="file='page_choose.png' corner='5,5,5,5'" pushedimage="file='page_click.png' corner='5,5,5,5'" disabledimage="file='page_grey.png' corner='5,5,5,5'" style="edit_style"/>
 				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout width="5" bordersize="0" inset="1,1,1,1">

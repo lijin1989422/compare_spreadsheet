@@ -101,7 +101,7 @@ std::string DataBase::toString(void)
 		str = buff;
 		break;
 	case DTYPE_FLOAT:
-		sprintf(buff, "%f", m_floatData);
+		sprintf(buff, "%.6f", m_floatData);
 		str = buff;
 		break;
 	case DTYPE_BOOL:

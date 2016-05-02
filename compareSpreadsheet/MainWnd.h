@@ -3,6 +3,9 @@
 #include "ShlObj.h"
 #include "MsgWnd.h"
 #include "ControlEx.h"
+#include <Windows.h>
+#include <winuser.h>
+#include <CommDlg.h>
 
 #include <iostream>
 #include <algorithm>
@@ -345,6 +348,42 @@ if( msg.sType == _T("click") )
 			LPCTSTR text2 = m_edit2->GetText().GetData();
 
 			LoadFromFile(text1, text2);
+		}
+		else if(pControl->GetName() == _T("save"))
+		{
+			OPENFILENAME ofn;       // common dialog box structure
+			ZeroMemory(&ofn, sizeof(ofn));
+
+			char szFile[260];       // buffer for file name
+			// Initialize OPENFILENAME
+			
+			ofn.lStructSize = sizeof(ofn);
+			ofn.hwndOwner = GetForegroundWindow();
+			ofn.lpstrFile = szFile;
+			// Set lpstrFile[0] to '\0' so that GetOpenFileName does not 
+			// use the contents of szFile to initialize itself.
+			ofn.lpstrFile[0] = '\0';
+			ofn.nMaxFile = sizeof(szFile);
+			ofn.lpstrFilter = "CSV Files(*.csv)\0*.csv\0";
+			ofn.lpstrDefExt = "csv";
+			ofn.nFilterIndex = 1;
+			ofn.lpTemplateName = "save.csv";
+			ofn.lpstrFileTitle = NULL;
+			ofn.nMaxFileTitle = 0;
+			ofn.lpstrInitialDir = ".";
+			ofn.Flags = OFN_HIDEREADONLY | OFN_PATHMUSTEXIST;  
+			ofn.FlagsEx = OFN_EX_NOPLACESBAR;
+
+			// Display the Open dialog box. 
+
+			if (GetSaveFileName(&ofn)==TRUE)  
+			{ 
+				//MessageBox(ofn.hwndOwner, ofn.lpstrFile, "", MB_OK); 
+				m_entity.save(ofn.lpstrFile);
+			} 
+
+
+			//LoadFromFile(text1, text2);
 		}
 	}
 

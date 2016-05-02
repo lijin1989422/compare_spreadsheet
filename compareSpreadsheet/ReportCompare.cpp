@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ReportCompare.h"
 #include <map>
 #include <string>
@@ -89,10 +89,10 @@ void ReportCompare::compare(ReportEntity& e1, ReportEntity& e2, ReportEntity& eo
 
 			if(numericname.find(name) != numericname.end() && numericname[name]){
 				numericindex[i] = name;
-				eout.headerAddField("¦¤");
-				eout.headerAddField("¦Ä");
+				eout.headerAddField("D");
+				eout.headerAddField("d");
 			}else{
-				eout.headerAddField("¦¤");
+				eout.headerAddField("D");
 			}
 
 		}

@@ -31,7 +31,7 @@ public:
 	static void getSortType(int& tTag, bool& vAsc);
 	static bool compareRow(const ReportRow& row1, const ReportRow& row2);
 
-
+	void save(std::string filepath);
 	void print(void);
 
 public:
