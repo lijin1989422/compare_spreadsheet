@@ -36,6 +36,31 @@ static int charArrToInt(char* arr)
 	return x;
 }
 
+void ReportCompare::makeRowIndex(ReportEntity& entity, KeyMap& keymap, RowMap& rowmap)
+{
+	for(int i=0; i< entity.getLineCount(); ++i){
+		ReportEntity::ReportRow& row = entity.getContentRow(i);
+
+		char buff[64] = {0};
+		int buffindex = 0;
+
+		for(int i=0; i<row.size(); ++i){
+			if(keymap.find(i) != keymap.end())
+			{
+				int key = row[i]->getInt();
+				intToCharArr(key, buff+buffindex);
+				buffindex+=4;
+
+				assert(row[i]->dataType() == DTYPE_INT);
+			}
+		}
+
+
+		std::string key(buff);
+		rowmap[key] = &row;
+	}
+}
+
 void ReportCompare::compare(ReportEntity& e1, ReportEntity& e2, ReportEntity& eout )
 {
 	std::map<std::string, bool> keyname;
@@ -46,8 +71,8 @@ void ReportCompare::compare(ReportEntity& e1, ReportEntity& e2, ReportEntity& eo
 	std::map<std::string, bool> numericname;
 	numericname["column2"] = true;
 
-	std::map<int, std::string> keyindex;
-	std::map<int, std::string> numericindex;
+	KeyMap keyindex;
+	KeyMap numericindex;
 
 	for(int i=0; i< e1.getFieldCount(); ++i){
 		std::string name = e1.getFieldName(i);
@@ -74,51 +99,8 @@ void ReportCompare::compare(ReportEntity& e1, ReportEntity& e2, ReportEntity& eo
 	}	
 
 	RowMap rowmap1,rowmap2;
-	for(int i=0; i< e1.getLineCount(); ++i){
-		ReportEntity::ReportRow& row = e1.getContentRow(i);
-
-		char buff[64] = {0};
-		int buffindex = 0;
-
-		for(int i=0; i<row.size(); ++i){
-			if(keyindex.find(i) != keyindex.end())
-			{
-				int key = row[i]->getInt();
-				intToCharArr(key, buff+buffindex);
-				buffindex+=4;
-
-				assert(row[i]->dataType() == DTYPE_INT);
-			}
-		}
-
-
-		std::string key(buff);
-		rowmap1[key] = &row;
-	}
-
-	for(int i=0; i< e2.getLineCount(); ++i){
-		ReportEntity::ReportRow& row = e2.getContentRow(i);
-
-		char buff[64] = {0};
-		int buffindex = 0;
-
-		for(int i=0; i<row.size(); ++i){
-			if(keyindex.find(i) != keyindex.end())
-			{
-				int key = row[i]->getInt();
-				intToCharArr(key, buff+buffindex);
-				buffindex+=4;
-
-				//std::string test = row[i]->toStringEx();
-				//std::cout << test << "@@@" << std::endl;
-				assert(row[i]->dataType() == DTYPE_INT);
-			}
-		}
-
-
-		std::string key(buff);
-		rowmap2[key] = &row;
-	}
+	makeRowIndex(e1, keyindex, rowmap1);
+	makeRowIndex(e2, keyindex, rowmap2);
 
 	RowMap mapmatch;
 	for(RowMap::iterator iter= rowmap1.begin();
