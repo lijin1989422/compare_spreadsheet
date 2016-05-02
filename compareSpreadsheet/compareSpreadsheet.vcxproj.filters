@@ -94,7 +94,6 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Res\compareTool.ico" />
-    <None Include="Res\compareTool.zip" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="compareTool.rc">

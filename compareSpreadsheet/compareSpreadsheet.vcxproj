@@ -522,7 +522,6 @@
   <ItemGroup>
     <None Include="Flash11.tlb" />
     <None Include="Res\compareTool.ico" />
-    <None Include="Res\compareTool.zip" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="compareTool.rc" />
